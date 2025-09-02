@@ -1,0 +1,19 @@
+{% comment %}
+  Questo template parziale renderizza un singolo campo di un form Django.
+  Accetta le seguenti variabili nel contesto:
+  - field: L'oggetto campo del form (es. form.nome)
+  - grid_class: La classe della griglia Bootstrap (es. "col-md-4")
+  - custom_label (opzionale): Un'etichetta personalizzata per il campo.
+{% endcomment %}
+
+<div class="{{ grid_class }}">
+  {% if field.field.widget.input_type == 'checkbox' %}
+    <div class="form-check h-100 d-flex align-items-end pb-1">
+      {{ field }}
+      <label for="{{ field.id_for_label }}" class="form-check-label ms-2">{{ custom_label|default:field.label }}</label>
+    </div>
+  {% else %}
+    <label for="{{ field.id_for_label }}" class="form-label">{{ custom_label|default:field.label }}</label>
+    {{ field }}
+  {% endif %}
+</div>

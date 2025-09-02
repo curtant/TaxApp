@@ -1,0 +1,107 @@
+# ========================================
+# Python / Django
+# ========================================
+**/*__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.py.class
+*.so
+
+# Environment
+.env
+.env.local
+.env.*.local
+*.venv/
+venv/
+ENV/
+env/
+env.bak/
+
+# Django stuff:
+*.log
+*.pot
+*.pyc
+**/*db.sqlite3
+**/*db.sqlite3-journal
+media/
+staticfiles/
+
+# Backup files
+*.bak
+*.swp
+*.swo
+
+# MyPy / Pyright / Pylint
+.mypy_cache/
+.dmypy.json
+dmypy.json
+.pyre/
+.pytype/
+__pypackages__/
+
+# Coverage / testing
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.tox/
+.junit/
+
+# ========================================
+# Node / Vue
+# ========================================
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Dependency directories
+**/*/node_modules/
+**/*/jspm_packages/
+
+# Build output
+dist/
+build/
+*.local
+
+# Vue CLI / Vite
+**/*.cache/
+**/*.cache-loader/
+**/*tmp/
+**/*out/
+**/*vite-cache/
+**/*vite.config.ts.timestamp*
+*.tsbuildinfo
+
+# Testing
+coverage/
+.nyc_output/
+
+# Editor / IDE
+.idea/
+.vscode/
+*.sublime-workspace
+*.sublime-project
+
+# OS
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# ========================================
+# Docker
+# ========================================
+*.pid
+*.seed
+*.pid.lock
+docker-compose.override.yml
+

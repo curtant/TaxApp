@@ -1,0 +1,40 @@
+{% csrf_token %}
+
+<!-- Dati Anagrafici -->
+<div class="card mb-4">
+  <div class="card-body">
+    <h5 class="card-title mb-4">Dati anagrafici</h5>
+    {{ form_anagrafici.as_p }}
+  </div>
+</div>
+
+<!-- Residenza Anagrafica -->
+<div class="card mb-4">
+  <div class="card-body">
+    <h5 class="card-title mb-4">Residenza anagrafica</h5>
+    {{ form_residenza.as_p }}
+  </div>
+</div>
+
+<!-- Contatti -->
+<div class="card mb-4">
+  <div class="card-body">
+    <h5 class="card-title mb-4">Telefono e posta elettronica</h5>
+    {{ form_contatti.as_p }}
+  </div>
+</div>
+
+<!-- Domicilio Fiscale -->
+<div class="card mb-4">
+  <div class="card-body">
+    <h5 class="card-title mb-4">Domicilio Fiscale al 01/01/2025</h5>
+    {{ form_domicilio.as_p }}
+  </div>
+</div>
+
+<!-- Pulsanti di Azione -->
+<div class="mt-4">
+  <button type="submit" class="btn btn-primary me-2">Salva</button>
+  <button type="button" class="btn btn-secondary me-2">Annulla modifiche</button>
+  <button type="button" class="btn btn-outline-secondary">Ripulisci campi</button>
+</div>
