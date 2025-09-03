@@ -1,0 +1,20 @@
+# Framework principale con la versione specificata
+django>=5.2
+
+# Integrazione Frontend (Vite)
+django-vite
+
+# Gestione delle policy Cross-Origin (CORS)
+django-cors-headers
+
+# Gestione delle variabili d'ambiente 
+django-environ
+
+# Libreria per effettuare richieste HTTP 
+requests
+
+# Libreria per la manipolazione di immagini 
+Pillow
+
+# Server WSGI per il deploy in produzione
+gunicorn
