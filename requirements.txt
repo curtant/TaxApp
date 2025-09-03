@@ -18,3 +18,6 @@ Pillow
 
 # Server WSGI per il deploy in produzione
 gunicorn
+
+# WhiteNoise per servire i file statici in produzione
+whitenoise[brotli]
