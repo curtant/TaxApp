@@ -17,13 +17,7 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-STATIC_URL = 'static/'
-
-# Lista dei percorsi da cui collectstatic raccoglierà i file.
-# In produzione, questa lista è vuota perché gli asset di Vue sono gestiti
-# dal componente Static Site separato.
-STATICFILES_DIRS = []
-
+# --- Caricamento Variabili d'Ambiente ---
 ENV_FILE = BASE_DIR.parent / ".env"
 env = environ.Env()
 
@@ -33,38 +27,16 @@ if ENV_FILE.exists():
 else:
     print("⚠️  Nessun file .env trovato in:", ENV_FILE)
 
+# --- Impostazioni di Sicurezza e Core ---
 SECRET_KEY = env('DJANGO_SECRET_KEY')
 DEBUG = env.bool('DEBUG', default=True)
 ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=['localhost', '127.0.0.1'])
 
-if DEBUG:
-    # Solo in sviluppo locale, diciamo a Django dove trovare gli asset di Vite
-    # per far funzionare django-vite correttamente.
-    STATICFILES_DIRS += [
-        BASE_DIR / "frontend/dist",
-    ]
+# Aggiunge il dominio di DigitalOcean in produzione per evitare errori 400
 if not DEBUG:
     ALLOWED_HOSTS.append('.ondigitalocean.app')
 
-# La cartella dove 'collectstatic' depositerà tutti i file statici
-# per il deploy. È richiesta in produzione.
-STATIC_ROOT = BASE_DIR / 'staticfiles'
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
-
-# # SECURITY WARNING: keep the secret key used in production secret!
-# SECRET_KEY = env('DJANGO_SECRET_KEY', default='your-secret-key-here')
-
-# # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = env('DEBUG')
-
-
-
-
-
-# Application definition
-
+# --- Definizione delle Applicazioni ---
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -110,9 +82,8 @@ TEMPLATES = [
 WSGI_APPLICATION = 'djcore.wsgi.application'
 
 
-# Database
+# --- Database ---
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -121,9 +92,8 @@ DATABASES = {
 }
 
 
-# Password validation
+# --- Validazione Password ---
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
-
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -140,35 +110,50 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-# Internationalization
+# --- Internazionalizzazione ---
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
-
 LANGUAGE_CODE = 'en-us'
-
 TIME_ZONE = 'UTC'
-
 USE_I18N = True
-
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
+# --- Gestione File Statici e Integrazione Vite ---
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = 'static/'
-LOGIN_URL = 'login'
-LOGIN_REDIRECT_URL = 'dashboard'
-LOGOUT_REDIRECT_URL = 'login'
-# Default primary key field type
-# https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+# Configurazione dice a 'collectstatic' di cercare gli asset generati da Vite
+
+STATICFILES_DIRS = [
+    BASE_DIR.parent / "frontend/dist",
+]
+
+# La cartella (all'interno del backend) dove 'collectstatic' depositerà tutti i file statici
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+# In sviluppo, il manifest è nella sua posizione originale.
+VITE_MANIFEST_PATH = BASE_DIR / "frontend/dist/manifest.json"
+
+# In produzione (not DEBUG), 'collectstatic' avrà copiato il manifest dentro STATIC_ROOT
+if not DEBUG:
+    VITE_MANIFEST_PATH = STATIC_ROOT / "manifest.json"
 
 DJANGO_VITE = {
     "default": {
         "dev_mode": DEBUG,
-        "manifest_path": BASE_DIR / "frontend/dist/manifest.json",
+        "manifest_path": VITE_MANIFEST_PATH, # Usa il percorso dinamico
         "dev_server_host": "127.0.0.1",
         "dev_server_port": 5173,
     }
 }
+
+
+# --- URL di Autenticazione ---
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'dashboard'
+LOGOUT_REDIRECT_URL = 'login'
+
+# --- Tipo di Chiave Primaria ---
+# https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
