@@ -24,6 +24,19 @@ STATIC_URL = 'static/'
 # dal componente Static Site separato.
 STATICFILES_DIRS = []
 
+ENV_FILE = BASE_DIR.parent / ".env"
+env = environ.Env()
+
+if ENV_FILE.exists():
+    environ.Env.read_env(str(ENV_FILE))
+    print("✅ File .env caricato da:", ENV_FILE)
+else:
+    print("⚠️  Nessun file .env trovato in:", ENV_FILE)
+
+SECRET_KEY = env('DJANGO_SECRET_KEY')
+DEBUG = env.bool('DEBUG', default=True)
+ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=['localhost', '127.0.0.1'])
+
 if DEBUG:
     # Solo in sviluppo locale, diciamo a Django dove trovare gli asset di Vite
     # per far funzionare django-vite correttamente.
@@ -46,18 +59,7 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 # DEBUG = env('DEBUG')
 
 
-ENV_FILE = BASE_DIR.parent / ".env"
-env = environ.Env()
 
-if ENV_FILE.exists():
-    environ.Env.read_env(str(ENV_FILE))
-    print("✅ File .env caricato da:", ENV_FILE)
-else:
-    print("⚠️  Nessun file .env trovato in:", ENV_FILE)
-
-SECRET_KEY = env('DJANGO_SECRET_KEY')
-DEBUG = env.bool('DEBUG', default=True)
-ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=['localhost', '127.0.0.1'])
 
 
 # Application definition
