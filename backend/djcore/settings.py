@@ -16,11 +16,25 @@ from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
 STATIC_URL = 'static/'
-STATICFILES_DIRS = [
-    # Aggiungi il percorso alla cartella 'dist' di Vite
-    BASE_DIR / "frontend/dist",
-]
+
+# Lista dei percorsi da cui collectstatic raccoglierà i file.
+# In produzione, questa lista è vuota perché gli asset di Vue sono gestiti
+# dal componente Static Site separato.
+STATICFILES_DIRS = []
+
+if DEBUG:
+    # Solo in sviluppo locale, diciamo a Django dove trovare gli asset di Vite
+    # per far funzionare django-vite correttamente.
+    STATICFILES_DIRS += [
+        BASE_DIR / "frontend/dist",
+    ]
+
+
+# La cartella dove 'collectstatic' depositerà tutti i file statici
+# per il deploy. È richiesta in produzione.
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
