@@ -43,7 +43,8 @@ if DEBUG:
     STATICFILES_DIRS += [
         BASE_DIR / "frontend/dist",
     ]
-
+if not DEBUG:
+    ALLOWED_HOSTS.append('.ondigitalocean.app')
 
 # La cartella dove 'collectstatic' depositerà tutti i file statici
 # per il deploy. È richiesta in produzione.
